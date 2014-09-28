@@ -136,18 +136,33 @@ function redrawFields() {
     }
 }
 
-
-function checkWin() {
+function checkEqualClasses(classesString) {
     var fieldSize = document.getElementById("sizeSelect").value;
     var main = document.getElementById("game");
     var desiredO = "";
     var desiredX = "";
-
+    var win = false;
 
     for (var i = 0; i < fieldSize; i++) {
         desiredO += "o";
         desiredX += "x";
     }
+
+
+    if (classesString == desiredO) {
+        navigator.notification.alert("Wygrywa kółko!", clearField, "Wygrana!", "OK");
+        win = true;
+    } else if (classesString == desiredX) {
+        navigator.notification.alert("Wygrywa krzyżyk!", clearField, "Wygrana!", "OK");
+        win = true;
+    }
+    return win;
+}
+
+function checkWin() {
+    var fieldSize = document.getElementById("sizeSelect").value;
+    var main = document.getElementById("game");
+    var win = false;
 
     //sprawdzam rzędy:
     for (var row = 0; row < fieldSize; row++) {
@@ -155,13 +170,8 @@ function checkWin() {
         for (var field = 0; field < fieldSize; field++) {
             actual += main.childNodes[(row * fieldSize) + field].className;
         }
-        if (actual == desiredO) {
-            navigator.notification.alert("Wygrywa kółko!", clearField, "Wygrana!", "OK");
-            return;
-        } else if (actual == desiredX) {
-            navigator.notification.alert("Wygrywa krzyżyk!", clearField, "Wygrana!", "OK");
-            return;
-        }
+        win = checkEqualClasses(actual);
+        if (win) return;
     }
 
     //sprawdzam kolumny:
@@ -170,47 +180,28 @@ function checkWin() {
         for (var field = 0; field < fieldSize; field++) {
             actual += main.childNodes[col + (field * fieldSize)].className;
         }
-        if (actual == desiredO) {
-            navigator.notification.alert("Wygrywa kółko!", clearField, "Wygrana!", "OK");
-            return;
-        } else if (actual == desiredX) {
-            navigator.notification.alert("Wygrywa krzyżyk!", clearField, "Wygrana!", "OK");
-            return;
-        }
+        win = checkEqualClasses(actual);
+        if (win) return;
     }
 
     //sprawdzam przekątną "\":
     for (var field = 0; field < fieldSize; field++) {
         var actual = "";
         for (var cross = 0; cross < fieldSize; cross++) {
-           // console.log(cross * (fieldSize + cross));
             actual += main.childNodes[cross * fieldSize + cross].className;
         }
-        //console.log("cross lewy: " + actual)
-        if (actual == desiredO) {
-            navigator.notification.alert("Wygrywa kółko!", clearField, "Wygrana!", "OK");
-            return;
-        } else if (actual == desiredX) {
-            navigator.notification.alert("Wygrywa krzyżyk!", clearField, "Wygrana!", "OK");
-            return;
-        }
+        win = checkEqualClasses(actual);
+        if (win) return;
     }
 
     //sprawdzam przekątną "/":
     for (var field = 0; field < fieldSize; field++) {
         var actual = "";
         for (var cross = fieldSize; cross > 0; cross--) {
-            //console.log(cross * fieldSize - cross);
             actual += main.childNodes[cross * fieldSize - cross].className;
         }
-        //console.log("cross prawy: " + actual)
-        if (actual == desiredO) {
-            navigator.notification.alert("Wygrywa kółko!", clearField, "Wygrana!", "OK");
-            return;
-        } else if (actual == desiredX) {
-            navigator.notification.alert("Wygrywa krzyżyk!", clearField, "Wygrana!", "OK");
-            return;
-        }
+        win = checkEqualClasses(actual);
+        if (win) return;
     }
 
     if (moves == fieldSize * fieldSize) {
