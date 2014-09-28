@@ -1,4 +1,8 @@
-
+/*
+ * TicTacToe - Kółko i krzyżyk
+ * Autor: Patryk Ciepiela
+ * http://github.com/Machina123
+ */
 window.addEventListener("load", onLoad, false);
 
 var fieldWidth = 700;
@@ -67,13 +71,8 @@ function addChildDivs(gridSize) {
 
 var isCross = false;
 var moves = 0;
-function onSmallFieldClick(e) {
-    var field = e.target;
-
-    if (win) {
-        clearField();
-        return;
-    }
+function onSmallFieldClick(object) {
+    var field = object.target;
 
     if (field.innerHTML != "" || field.className != "n") {
         return;
@@ -127,7 +126,6 @@ function clearField() {
     gameField.innerHTML = "";
     addChildDivs(select.value);
     redrawFields();
-    win = false;
     moves = 0;
 }
 
@@ -138,7 +136,7 @@ function redrawFields() {
     }
 }
 
-var win = false;
+
 function checkWin() {
     var fieldSize = document.getElementById("sizeSelect").value;
     var main = document.getElementById("game");
