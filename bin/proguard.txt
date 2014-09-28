@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:52
+-keep class net.machina.projekty.gra001.gra001 { <init>(...); }
+

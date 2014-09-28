@@ -1,0 +1,11 @@
+﻿    button#clearField {
+        font-size: 2.5em;
+    }
+
+    select#colorSelect, select#sizeSelect {
+        font-size: 2.5em;
+    }
+
+    div#copyrights {
+        font-size: 14pt;
+    }
